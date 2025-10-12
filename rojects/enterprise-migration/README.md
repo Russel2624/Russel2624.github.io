@@ -1,6 +1,6 @@
 ## Enterprise Network Migration Project
 
-![Migration Architecture](../Screenshot%202025-10-08%20211533.png)
+![Migration Architecture](../../Screenshot%202025-10-08%20211533.png)
 
 *Network architecture diagram showing OSPF migration from RIP routing*
 
@@ -19,7 +19,7 @@ Enterprise-scale migration of multi-branch corporate network from legacy RIP rou
 - OSPF Routing Protocol
 - IP Subnetting & CIDR
 - Network Migration Planning
-- Cisco IOS Configuration
+- **Cisco IOS Configuration**
 - Network Documentation
 
 ### **Project Impact**

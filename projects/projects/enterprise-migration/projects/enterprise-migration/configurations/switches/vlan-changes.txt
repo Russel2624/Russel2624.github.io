@@ -1,0 +1,58 @@
+! VLAN Changes for OSPF Migration
+
+! New VLANs for OSPF Network Segmentation
+vlan 100
+ name OSPF-CORE-MGMT
+vlan 200
+ name OSPF-DISTRIBUTION  
+vlan 300
+ name OSPF-ACCESS
+
+! Interface Reconfiguration for OSPF
+interface Vlan100
+ description OSPF Core Management
+ ip address 10.1.100.1 255.255.255.0
+ no shutdown
+
+interface Vlan200
+ description OSPF Distribution Network
+ ip address 10.1.200.1 255.255.255.0
+ no shutdown
+
+interface Vlan300  
+ description OSPF Access Layer
+ ip address 10.1.300.1 255.255.255.0
+ no shutdown
+
+! Trunk Configuration for OSPF VLANs
+interface GigabitEthernet0/1
+ description Trunk to Core Switch
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 100,200,300
+ spanning-tree portfast trunk
+
+interface GigabitEthernet0/2
+ description Trunk to Distribution Switch  
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 100,200,300
+
+! Access Port Migration
+interface range GigabitEthernet1/1-24
+ switchport access vlan 300
+ switchport voice vlan 400
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+
+! HSRP Configuration for OSPF Networks
+interface Vlan100
+ standby 1 ip 10.1.100.254
+ standby 1 priority 110
+ standby 1 preempt
+ standby 1 track GigabitEthernet0/1
+
+interface Vlan200
+ standby 2 ip 10.1.200.254
+ standby 2 priority 105
+ standby 2 preempt

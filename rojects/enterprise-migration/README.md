@@ -1,6 +1,6 @@
 ## Enterprise Network Migration Project
 
-![Migration Architecture](Screenshot%202025-10-08%20211533.png)
+![Migration Architecture](../Screenshot%202025-10-08%20211533.png)
 
 *Network architecture diagram showing OSPF migration from RIP routing*
 

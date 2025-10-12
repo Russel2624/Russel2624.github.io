@@ -1,6 +1,6 @@
 ## Enterprise Network Migration Project
 
-![Migration Architecture](../../enterprise-migration-architecture.png)
+![Migration Architecture](https://raw.githubusercontent.com/russel2624/russel2624.github.io/main/enterprise-migration-architecture.png)
 
 *Network architecture diagram showing OSPF migration from RIP routing*
 

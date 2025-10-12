@@ -1,0 +1,32 @@
+! Core Switch Configuration - COR-SW-01
+hostname COR-SW-01
+
+! VLAN Configuration
+vlan 10
+ name INFRASTRUCTURE_MGMT
+vlan 20  
+ name SERVER_FARM
+vlan 30
+ name WIRELESS_MGMT
+
+! HSRP for Gateway Redundancy
+interface Vlan10
+ ip address 100.1.1.2 255.255.255.0
+ standby 1 ip 100.1.1.1
+ standby 1 priority 110
+ standby 1 preempt
+
+interface Vlan20
+ ip address 100.2.1.2 255.255.255.0
+ standby 2 ip 100.2.1.1
+ standby 2 priority 110
+
+! Trunk Configuration
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,100,200
+
+! Rapid-PVST+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 1,10,20,30 root primary

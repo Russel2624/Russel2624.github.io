@@ -1,0 +1,43 @@
+! RIP to OSPF Migration Configuration - Core Router
+
+! Remove existing RIP configuration
+no router rip
+
+! Configure OSPF
+router ospf 100
+ router-id 1.1.1.1
+ network 10.1.0.0 0.0.255.255 area 0
+ network 172.16.0.0 0.0.255.255 area 0
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ no passive-interface GigabitEthernet0/1
+
+! Route Redistribution from RIP to OSPF during transition
+router ospf 100
+ redistribute rip subnets route-map RIP-TO-OSPF
+
+! Temporary RIP configuration for migration
+router rip
+ version 2
+ network 10.0.0.0
+ network 192.168.1.0
+ redistribute ospf 100 metric 5 route-map OSPF-TO-RIP
+ no auto-summary
+
+! Route Maps for controlled redistribution
+route-map RIP-TO-OSPF permit 10
+ match ip address RIP-NETWORKS
+ set metric 100
+
+route-map OSPF-TO-RIP permit 10  
+ match ip address OSPF-NETWORKS
+ set metric 5
+
+! Access lists for route filtering
+ip access-list standard RIP-NETWORKS
+ permit 192.168.1.0 0.0.0.255
+ permit 192.168.2.0 0.0.0.255
+
+ip access-list standard OSPF-NETWORKS
+ permit 10.1.0.0 0.0.255.255
+ permit 172.16.0.0 0.0.255.255

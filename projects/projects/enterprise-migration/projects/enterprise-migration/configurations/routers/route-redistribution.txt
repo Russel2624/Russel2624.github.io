@@ -1,0 +1,46 @@
+! Route Redistribution Configuration - Migration Phase
+
+! OSPF to RIP Redistribution (Temporary)
+router rip
+ version 2
+ redistribute ospf 100 metric 5 route-map OSPF-FILTER
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ no passive-interface GigabitEthernet0/1
+
+! RIP to OSPF Redistribution (Temporary)  
+router ospf 100
+ redistribute rip subnets route-map RIP-FILTER
+
+! Route Maps for Controlled Redistribution
+route-map OSPF-FILTER permit 10
+ match ip address OSPF-CORE-NETWORKS
+ set metric 5
+
+route-map OSPF-FILTER deny 20
+! Deny all other OSPF routes from being redistributed into RIP
+
+route-map RIP-FILTER permit 10
+ match ip address RIP-LEGACY-NETWORKS
+ set metric-type 2
+ set metric 100
+
+route-map RIP-FILTER deny 20
+! Deny all other RIP routes from being redistributed into OSPF
+
+! Access Lists for Route Filtering
+ip access-list standard OSPF-CORE-NETWORKS
+ permit 10.1.0.0 0.0.255.255
+ permit 10.2.0.0 0.0.255.255
+ remark Core and distribution networks
+
+ip access-list standard RIP-LEGACY-NETWORKS
+ permit 192.168.1.0 0.0.0.255
+ permit 192.168.2.0 0.0.0.255
+ permit 192.168.3.0 0.0.0.255
+ remark Legacy branch networks
+
+! Monitoring Commands for Migration
+! show ip route | begin Gateway
+! show ip ospf neighbor
+! show ip rip database

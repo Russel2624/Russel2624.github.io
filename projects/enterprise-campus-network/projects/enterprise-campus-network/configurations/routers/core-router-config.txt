@@ -1,0 +1,28 @@
+! Core Router Configuration - COR-ROUTER-01
+hostname COR-ROUTER-01
+
+! Basic Configuration
+interface GigabitEthernet0/0/0
+ description ISP Connection - PPPoE
+ pppoe enable group global
+ pppoe-client dial-pool-number 1
+ no shutdown
+
+interface Dialer1
+ ip address negotiated
+ encapsulation ppp
+ dialer pool 1
+ nat outside
+
+! BGP Configuration
+router bgp 65001
+ bgp router-id 1.1.1.1
+ neighbor 200.1.1.1 remote-as 65000
+ network 172.16.0.0 mask 255.255.0.0
+ network 172.17.0.0 mask 255.255.0.0
+
+! EIGRP Configuration  
+router eigrp ENTERPRISE_NETWORK
+ address-family ipv4 autonomous-system 100
+  network 172.16.0.0 0.0.255.255
+  network 172.17.0.0 0.0.255.255

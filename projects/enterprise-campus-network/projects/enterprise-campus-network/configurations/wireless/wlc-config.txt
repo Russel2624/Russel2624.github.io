@@ -1,0 +1,37 @@
+! Wireless LAN Controller Configuration - WLC-300
+
+! SSID Configuration
+wlan ssid-profile "CORPORATE_NETWORK"
+ ssid CORPORATE
+ opmode wpa2_aes
+ vlan 300
+ broadcast-ssid
+
+wlan ssid-profile "GUEST_NETWORK"  
+ ssid GUEST
+ opmode open
+ vlan 301
+ guest-lan
+ captive-bypass enable
+
+wlan ssid-profile "BYOD_NETWORK"
+ ssid BYOD
+ opmode wpa2_aes
+ vlan 302
+ mfp-client
+
+! Security Policies
+security dot1x-profile "ENTERPRISE_DOT1X"
+ eap-profile EAP_TLS
+ radius-server host 100.2.1.10
+
+! RF Management
+rf-profile "OFFICE_COVERAGE"
+ tx-power-level 3
+ channel 1,6,11
+ data-rates 12,18,24,36,48,54
+
+! AP Configuration
+ap-profile "FLOOR1_ACCESS_POINTS"
+ rf-profile OFFICE_COVERAGE
+ primary-controller 100.3.1.1

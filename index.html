@@ -153,22 +153,6 @@
             border-left: 4px solid #28a745;
         }
 
-        .screenshot-container {
-            display: flex;
-            gap: 15px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .screenshot {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 8px;
-            border: 2px solid #ddd;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -185,15 +169,6 @@
             .contact-info {
                 flex-direction: column;
                 align-items: center;
-            }
-
-            .screenshot-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .screenshot {
-                max-width: 100%;
             }
         }
     </style>
@@ -247,13 +222,8 @@
                     <span class="tech-tag">Packet Tracer</span>
                 </div>
                 
-                <div class="screenshot-container">
-                    <img src="images/extended-acl-screenshot.png" alt="Extended ACL Configuration" class="screenshot">
-                    <img src="images/standard-acl-screenshot.png" alt="Standard ACL Configuration" class="screenshot">
-                </div>
-                
-                <p><strong>Standard ACLs:</strong> Implemented source-based filtering to control basic network access and restrict unauthorized subnets.</p>
-                <p><strong>Extended ACLs:</strong> Configured granular traffic control using source/destination IPs, protocols, and port numbers for application-specific security.</p>
+                <p><strong>Standard ACLs:</strong> Configured source-based filtering to control network access and restrict unauthorized subnets using basic IP address filtering.</p>
+                <p><strong>Extended ACLs:</strong> Implemented granular traffic control using source/destination IPs, protocols, and port numbers for application-specific security policies.</p>
             </div>
 
             <div class="project">
